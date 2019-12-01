@@ -5,8 +5,26 @@ class Module {
   final int mass;
   const Module({this.mass});
 
-  int calculateFuelRequired() {
-    return (mass / 3).floor() - 2;
+  int calculateInitialFuelRequired() {
+    return fuelCalc(mass);
+  }
+
+  int calculateTotalFuelRequired() {
+    return recursiveFuelCalc(mass);
+  }
+}
+
+int fuelCalc(int mass) {
+  return (mass / 3).floor() - 2;
+}
+
+int recursiveFuelCalc(int mass, {int carryOverFuel = 0}) {
+  var additionalFuel = fuelCalc(mass);
+  if (additionalFuel <= 0) {
+    return carryOverFuel;
+  } else {
+    return recursiveFuelCalc(additionalFuel,
+        carryOverFuel: carryOverFuel + additionalFuel);
   }
 }
 
