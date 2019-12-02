@@ -18,13 +18,12 @@ int fuelCalc(int mass) {
   return (mass / 3).floor() - 2;
 }
 
-int recursiveFuelCalc(int mass, {int carryOverFuel = 0}) {
-  var additionalFuel = fuelCalc(mass);
-  if (additionalFuel <= 0) {
-    return carryOverFuel;
+int recursiveFuelCalc(int mass) {
+  var fuelNeeded = fuelCalc(mass);
+  if (fuelNeeded < 0) {
+    return 0;
   } else {
-    return recursiveFuelCalc(additionalFuel,
-        carryOverFuel: carryOverFuel + additionalFuel);
+    return fuelNeeded + recursiveFuelCalc(fuelNeeded);
   }
 }
 
